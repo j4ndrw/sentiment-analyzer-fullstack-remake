@@ -27,3 +27,7 @@ api/models
 api/src/__pycache__
 
 package-lock.json
+
+sentimentanalysistraining/data
+sentimentanalysistraining/models
+sentimentanalysistraining/src/.ipynb_checkpoints
