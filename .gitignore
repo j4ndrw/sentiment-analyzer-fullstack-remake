@@ -22,6 +22,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+api/src/.flaskenv
 api/data
 api/models
 api/src/__pycache__
