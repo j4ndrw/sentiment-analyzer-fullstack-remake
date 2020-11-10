@@ -44,7 +44,7 @@ body {
 }
 * {
   background: linear-gradient(286deg, #8400d1, #0349b9);
-  background-size: 300em 300em;
+  background-size: 500% 500%;
   animation: MovingGradient 40s ease infinite;
 }
 

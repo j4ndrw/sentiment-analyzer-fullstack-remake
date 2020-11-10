@@ -46,16 +46,16 @@ export default {
 
   methods: {
     evaluatePrediction(prediction) {
-      if(parseFloat(prediction) < -0.2) {
-        if(parseFloat(prediction) < -0.5) {
+      if(parseFloat(prediction) < 0.45) {
+        if(parseFloat(prediction) < 0.30) {
           this.statusData.message = "Why so negative today? Chill out!";
           this.statusData.color = "red";
         } else {
           this.statusData.message = "Hmm... I'm think you said something mean, but I am not too sure.";
           this.statusData.color = "red";
         }
-      } else if(parseFloat(prediction) > 0.2) {
-          if(parseFloat(prediction) > 0.5) {
+      } else if(parseFloat(prediction) > 0.45) {
+          if(parseFloat(prediction) > 0.75) {
             this.statusData.message = "Such a positive sentence! :)";
             this.statusData.color = "green";
           } else {
@@ -67,10 +67,9 @@ export default {
           this.statusData.color = "grey";
       }
     },
-
     analyzeSentence() {
       // TODO: send request to backend where model is stored.
-      fetch("http://localhost:5000/predict", {
+      fetch("http://0.0.0.0:5000/predict", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +136,7 @@ p {
 }
 
 .sentence-box {
-  min-height: 11.5vh;
+  min-height: 10vh;
 }
 
 .sentence-box,

@@ -60,4 +60,19 @@ h1 {
   background-color: rgba(128, 128, 128, 0.5);
   transition: 0.3s;
 }
+
+.red:hover {
+  background-color: rgba(255, 0, 0, 0.75);
+  transition: 0.3s;
+}
+
+.green:hover {
+  background-color: rgba(0, 255, 55, 0.75);
+  transition: 0.3s;
+}
+
+.grey:hover {
+  background-color: rgba(128, 128, 128, 0.75);
+  transition: 0.3s;
+}
 </style>

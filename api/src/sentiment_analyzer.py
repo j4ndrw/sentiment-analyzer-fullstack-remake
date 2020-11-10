@@ -116,24 +116,20 @@ def tokenize(comment):
     comment = comment.lower()
     text = ''.join([char for char in comment if char not in punctuation])
 
-    words = text.split()
+    words = text.split(" ")
 
     ints = []
+    ints.append([vocab_to_int[word] for word in words if word in list(vocab_to_int.keys())])
+    
+    return ints
 
-    for word in words:
-        try:
-            ints.append(vocab_to_int[word])
-        except:
-            pass
-    return [ints]
-
-model = torch.load("../models/SentimentAnalyzer_08-11-2020_21-35-52.pth").cpu()
+model = torch.load("../models/SentimentAnalyzerBestModel.pth").cpu()
 seq_len = 150
 
 def verdict(x):
-    if x < 0:
+    if x < 0.45:
         return "negative"
-    elif x == 0:
+    elif x >= 0.45 and x <= 0.75:
         return "neutral"
     else:
         return "positive"

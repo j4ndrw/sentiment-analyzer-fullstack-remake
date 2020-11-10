@@ -14,7 +14,8 @@ export default {
 
 <style>
 .welcome-message {
-  margin: 2em auto;
+  margin: 2em 2em;
+  
   text-align: center;
   font-size: 1.5em;
   padding: 0px 5px;
