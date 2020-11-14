@@ -9,7 +9,7 @@ from string import punctuation
 import numpy as np
 
 from flask import Flask, jsonify, request
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
@@ -135,12 +135,11 @@ def verdict(x):
         return "positive"
 
 @app.route("/predict", methods = ["POST"])
-@cross_origin()
 def predict():
+    print("lmao")
     model.eval()
     
     comment = request.json
-    print(comment)
     ints = tokenize(comment)
     features = torch.from_numpy(pad_features(ints, seq_len))
 
@@ -149,9 +148,12 @@ def predict():
     
     out, hidden_state = model(features, hidden_state)
     pred = torch.round(out.squeeze())
-    print(f'Prediction: {(out.item() + 1) / 2:.6f} | Verdict: {verdict(out.item())} | Ints: {ints}')
 
-    return jsonify(f"{(out.item() + 1) / 2:.3f}")
+    # print(f'Prediction: {(out.item() + 1) / 2:.4f} | Verdict: {verdict(out.item())} | Ints: {ints}')
 
+    response = jsonify(f"{(out.item() + 1) / 2:.4f}")
+
+    return response
+    
 if __name__ == "__main__":
     app.run()

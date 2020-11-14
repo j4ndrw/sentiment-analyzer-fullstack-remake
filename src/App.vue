@@ -31,7 +31,7 @@ export default {
 
 html, body {
   max-width: 100%;
-  overflow: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -61,5 +61,14 @@ body {
     background-position: 0% 39%;
   }
 
+}
+
+#app {
+  max-width: 1520px;
+  background-color: black;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: visible;
 }
 </style>

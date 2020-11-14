@@ -23,6 +23,9 @@
       </form>
     </div>
     <Status :status="statusData.message" :color="statusData.color"/>
+    <p :class="statusData.message === 'Waiting for you to enter your sentence' ? 'no-display' : `confidence-message ${statusData.color}`">
+      Confidence: {{ confidence }}%
+    </p>
   </div>
 </template>
 
@@ -40,13 +43,15 @@ export default {
       statusData: {
         message: "Waiting for you to enter your sentence",
         color: ""
-      }
+      },
+      confidence: 0
     };
   },
 
   methods: {
     evaluatePrediction(prediction) {
       if(parseFloat(prediction) < 0.45) {
+        this.confidence = 100 - (parseFloat(prediction) * 100);
         if(parseFloat(prediction) < 0.30) {
           this.statusData.message = "Why so negative today? Chill out!";
           this.statusData.color = "red";
@@ -55,6 +60,7 @@ export default {
           this.statusData.color = "red";
         }
       } else if(parseFloat(prediction) > 0.60) {
+          this.confidence = parseFloat(prediction) * 100;
           if(parseFloat(prediction) > 0.75) {
             this.statusData.message = "Such a positive sentence! :)";
             this.statusData.color = "green";
@@ -63,15 +69,15 @@ export default {
             this.statusData.color = "green";
           }
       } else {
+          this.confidence = parseFloat(prediction) * 100;
           this.statusData.message = "I don't know how to judge this... I think this is a neutral sentence!";
           this.statusData.color = "grey";
       }
     },
     analyzeSentence() {
       // TODO: send request to backend where model is stored.
-      fetch("http://0.0.0.0:5000/predict", {
+      fetch("/predict", {
         method: 'POST',
-        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -113,14 +119,16 @@ p.no-display {
 p {
   display: block;
   text-align: center;
-  width: 10%;
+  width: 30%;
+
+  padding: 1em;
 
   margin-bottom: 10px;
 
   transition: all 0.3s;
 
   color: #ffffff;
-  font-size: 0.95em;
+  font-size: 1.2em;
 
   appearance: none;
   border: none;
@@ -232,5 +240,10 @@ p {
 
 .entered-sentence {
   font-size: 0.5em;
+}
+
+.confidence-message {
+  width: 60%;
+
 }
 </style>
