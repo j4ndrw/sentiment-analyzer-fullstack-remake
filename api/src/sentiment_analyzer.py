@@ -9,7 +9,7 @@ from string import punctuation
 import numpy as np
 
 from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
@@ -123,7 +123,7 @@ def tokenize(comment):
     
     return ints
 
-model = torch.load("../models/SentimentAnalyzerBestModel.pth").cpu()
+model = torch.load("../models/SentimentAnalyzerBestModel.pth", map_location = torch.device('cpu'))
 seq_len = 150
 
 def verdict(x):
@@ -135,6 +135,7 @@ def verdict(x):
         return "positive"
 
 @app.route("/predict", methods = ["POST"])
+@cross_origin()
 def predict():
     model.eval()
     
@@ -142,15 +143,15 @@ def predict():
     print(comment)
     ints = tokenize(comment)
     features = torch.from_numpy(pad_features(ints, seq_len))
-    
+
     batch_size = features.size(0)
     hidden_state = model.init_hidden(batch_size)
     
     out, hidden_state = model(features, hidden_state)
     pred = torch.round(out.squeeze())
-    print(f'Prediction: {out.item():.6f} | Verdict: {verdict(out.item())} | Ints: {ints}')
+    print(f'Prediction: {(out.item() + 1) / 2:.6f} | Verdict: {verdict(out.item())} | Ints: {ints}')
 
-    return jsonify(f"{out.item():.3f}")
+    return jsonify(f"{(out.item() + 1) / 2:.3f}")
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run()

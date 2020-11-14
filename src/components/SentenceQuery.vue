@@ -54,7 +54,7 @@ export default {
           this.statusData.message = "Hmm... I'm think you said something mean, but I am not too sure.";
           this.statusData.color = "red";
         }
-      } else if(parseFloat(prediction) > 0.45) {
+      } else if(parseFloat(prediction) > 0.60) {
           if(parseFloat(prediction) > 0.75) {
             this.statusData.message = "Such a positive sentence! :)";
             this.statusData.color = "green";
@@ -71,6 +71,7 @@ export default {
       // TODO: send request to backend where model is stored.
       fetch("http://0.0.0.0:5000/predict", {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
