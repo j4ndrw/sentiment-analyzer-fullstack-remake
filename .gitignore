@@ -35,4 +35,3 @@ sentimentanalysistraining/src/.ipynb_checkpoints
 
 Dockerfile
 .dockerignore
-nginx.conf
