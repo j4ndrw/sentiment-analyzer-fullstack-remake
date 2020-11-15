@@ -5,7 +5,7 @@ This project is a full stack remake of the first project I have ever pushed to m
 
 At the time of building that project I was still very new to NLP, so my approach to it was very poor, as all I did was converting words into embeddings and passing them to a class DNN, which wasn't a good idea since I used to get 70% accuracy, and that was based only on training. I had no idea that you can split your data and validate it, so you can imagine the network was *very* bad.
 
-Since I find myself to be a bit more advanced in Deep Learning and Full Stack Development, I thought it would be nice to remake that project, following good programming principles and State of the Art techniques in Deep Learning, such as an LSTM network, which I have implemented.
+Since I now find myself to be a bit more advanced in Deep Learning and Full Stack Development, I thought it would be nice to remake that project, following good programming principles and State of the Art techniques in Deep Learning, such as an LSTM network, which I have implemented.
 
 I used Vue.js for the frontend, as I wanted to get a bit more into it since I saw a lot of people saying really good things about it, and I loved it. This is my first Vue app.
 
