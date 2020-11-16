@@ -11,8 +11,13 @@ import numpy as np
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
+import logging
+
 app = Flask(__name__)
 CORS(app)
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 # Vocabulary
 vocab_to_int = np.load("../data/vocab_to_int.npy", allow_pickle = True).item()

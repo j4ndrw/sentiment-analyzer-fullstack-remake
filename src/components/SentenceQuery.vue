@@ -23,8 +23,8 @@
       </form>
     </div>
     <Status :status="statusData.message" :color="statusData.color"/>
-    <p :class="statusData.message === 'Waiting for you to enter your sentence' ? 'no-display' : `confidence-message ${statusData.color}`">
-      Confidence: {{ confidence }}%
+    <p :class="statusData.message === 'Waiting for you to enter your sentence' ? 'no-display' : `polarity-message ${statusData.color}`">
+      Polarity: {{ polarity }}
     </p>
   </div>
 </template>
@@ -44,14 +44,14 @@ export default {
         message: "Waiting for you to enter your sentence",
         color: ""
       },
-      confidence: 0
+      polarity: 0,
     };
   },
 
   methods: {
     evaluatePrediction(prediction) {
+      this.polarity = parseFloat(prediction).toFixed(2);
       if(parseFloat(prediction) < 0.45) {
-        this.confidence = 100 - (parseFloat(prediction) * 100);
         if(parseFloat(prediction) < 0.30) {
           this.statusData.message = "Why so negative today? Chill out!";
           this.statusData.color = "red";
@@ -60,7 +60,6 @@ export default {
           this.statusData.color = "red";
         }
       } else if(parseFloat(prediction) > 0.60) {
-          this.confidence = parseFloat(prediction) * 100;
           if(parseFloat(prediction) > 0.75) {
             this.statusData.message = "Such a positive sentence! :)";
             this.statusData.color = "green";
@@ -69,7 +68,6 @@ export default {
             this.statusData.color = "green";
           }
       } else {
-          this.confidence = parseFloat(prediction) * 100;
           this.statusData.message = "I don't know how to judge this... I think this is a neutral sentence!";
           this.statusData.color = "grey";
       }
@@ -204,8 +202,11 @@ p {
 }
 
 .main-text {
-  width: 35em;
-  min-width: 100%;
+  display: block;
+  text-align: center;
+
+  width: 100%;
+  
   font-size: 3em;
   word-wrap: break-word;
   background: none;
@@ -242,7 +243,7 @@ p {
   font-size: 0.5em;
 }
 
-.confidence-message {
+.polarity-message {
   width: 60%;
 
 }

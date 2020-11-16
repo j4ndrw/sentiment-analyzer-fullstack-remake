@@ -64,11 +64,14 @@ body {
 }
 
 #app {
-  max-width: 1520px;
+  max-width: 100%;
   background-color: black;
   width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   overflow: visible;
+  overflow-x: hidden;
 }
 </style>
