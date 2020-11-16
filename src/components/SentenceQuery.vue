@@ -24,7 +24,7 @@
     </div>
     <Status :status="statusData.message" :color="statusData.color"/>
     <p :class="statusData.message === 'Waiting for you to enter your sentence' ? 'no-display' : `polarity-message ${statusData.color}`">
-      Polarity: {{ polarity }}
+      Polarity: [ {{ statusData.polarity }} | {{ statusData.polarityMessage }} ]
     </p>
   </div>
 </template>
@@ -42,16 +42,18 @@ export default {
       sentence: "",
       statusData: {
         message: "Waiting for you to enter your sentence",
-        color: ""
+        color: "",
+        polarity: 0,
+        polarityMessage: ""
       },
-      polarity: 0,
     };
   },
 
   methods: {
     evaluatePrediction(prediction) {
-      this.polarity = parseFloat(prediction).toFixed(2);
+      this.statusData.polarity = parseFloat(prediction).toFixed(2);
       if(parseFloat(prediction) < 0.45) {
+        this.statusData.polarityMessage = "NEGATIVE";
         if(parseFloat(prediction) < 0.30) {
           this.statusData.message = "Why so negative today? Chill out!";
           this.statusData.color = "red";
@@ -60,6 +62,7 @@ export default {
           this.statusData.color = "red";
         }
       } else if(parseFloat(prediction) > 0.60) {
+          this.statusData.polarityMessage = "POSITIVE";
           if(parseFloat(prediction) > 0.75) {
             this.statusData.message = "Such a positive sentence! :)";
             this.statusData.color = "green";
@@ -68,6 +71,7 @@ export default {
             this.statusData.color = "green";
           }
       } else {
+          this.statusData.polarityMessage = "NEUTRAL";
           this.statusData.message = "I don't know how to judge this... I think this is a neutral sentence!";
           this.statusData.color = "grey";
       }
