@@ -52,7 +52,8 @@ class SentimentAnalyzer(nn.Module):
             hidden_dim,
             n_layers,
             dropout = 0.5,
-            batch_first = True
+            batch_first = True,
+            bidirectional = True
         )
         
         # Fully connected layer
@@ -97,8 +98,8 @@ class SentimentAnalyzer(nn.Module):
     def init_hidden(self, batch_size):
         weight = next(self.parameters()).data
         
-        hidden = (weight.new(self.n_layers, batch_size, self.hidden_dim).zero_(), 
-                 weight.new(self.n_layers, batch_size, self.hidden_dim).zero_())
+        hidden = (weight.new(self.n_layers * 2, batch_size, self.hidden_dim).zero_(), 
+                 weight.new(self.n_layers * 2, batch_size, self.hidden_dim).zero_())
         return hidden
 
 def pad_features(comments_int, seq_length):
@@ -128,7 +129,7 @@ def tokenize(comment):
     
     return ints
 
-model = torch.load("../models/SentimentAnalyzerBestModel.pth", map_location = torch.device('cpu'))
+model = torch.load("../models/SentimentAnalyzerBRNN.pth", map_location = torch.device('cpu'))
 seq_len = 150
 
 def verdict(x):
@@ -141,7 +142,6 @@ def verdict(x):
 
 @app.route("/predict", methods = ["POST"])
 def predict():
-    print("lmao")
     model.eval()
     
     comment = request.json
