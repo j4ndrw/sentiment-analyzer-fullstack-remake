@@ -1,5 +1,5 @@
 # Sentiment analysis 
-## Check out the web app [here](http://ec2-18-130-255-217.eu-west-2.compute.amazonaws.com/)!
+## Check out the web app [here](http://ec2-18-130-255-217.eu-west-2.compute.amazonaws.com/) (Currently offline - hosting costs money)!
 
 This project is a full stack remake of the first project I have ever pushed to my GitHub account. That project involved sentiment analysis and it was the very first ML project I have ever done.
 
